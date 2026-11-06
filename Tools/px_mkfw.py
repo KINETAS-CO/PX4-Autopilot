@@ -88,7 +88,9 @@ if args.prototype != None:
 else:
 	desc = mkdesc()
 
-desc['build_time'] 		= int(time.time())
+# Honour SOURCE_DATE_EPOCH (https://reproducible-builds.org/specs/source-date-epoch/)
+# so the same source builds a byte-identical image.
+desc['build_time'] 		= int(os.environ.get('SOURCE_DATE_EPOCH', time.time()))
 
 if args.board_id != None:
 	desc['board_id']	= int(args.board_id)
